@@ -8,6 +8,15 @@ class JyankenGamePage extends Component {
         super(props) 
         this.state = {human: null, computer: null}
     }
+    componentDidMount() {
+        console.log("call componentDidMount")
+        setTimeout(() => { this.pon(1)}, 1000)
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        const identical = nextState.human == this.state.human && nextState.computer == this.state.computer
+        if(identical){ console.log("*Identical*") }
+        return !identical
+    }
     pon(human_hand) {
         const computer_hand = Math.floor(Math.random() * 3 )
         this.setState({human: human_hand, computer: computer_hand})
