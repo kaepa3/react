@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MultiThemeProvider from 'material-ui/styles/MultiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper';
 import {Tabs, Tab} from 'material-ui/Tabs'
@@ -13,7 +13,7 @@ import Jyanken from './Jyanken'
 class JyankenGamePage extends Component {
     constructor(props) {
         super(props) 
-        this.jyanken = new Jyanken()
+        this.Jyanken = new Jyanken()
         this.state = {scores: [], status: {}, tabIndex: 0}
     }
     componentDidMount() {
@@ -25,7 +25,7 @@ class JyankenGamePage extends Component {
     }
     getResult() {
         this.setState({scores: this.jyanken.getScores()})
-        this.setState({status: this.jyanken.getStatuses()})
+        this.setState({staus: this.jyanken.getStatuses()})
     }
     pon(te) {
         this.jyanken.pon(te)
@@ -33,48 +33,44 @@ class JyankenGamePage extends Component {
     }
     render() {
         return (
-            <MuiThemeProvider>
+            <MultiThemeProvider>
                 <div styles={{marginLeft: 30}}>
                     <Header>じゃんけん　ぽん！</Header>
                     <JyankenBox actionPon={(te) => this.pon(te)} />
-                    <Paper style={{width: 400}} zDepth={2}>
+                    <Paper styles{{width: 400}} zDepth={2}>
                         <Tabs value={this.state.tabIndex} onChange={(ix)=> this.tagChange(ix)}>
                             <Tab label="対戦結果" value={0}>
-                                <ScoreList scores={this.state.scores} />
+                                <ScoreList scores{this.state.scores} />
                             </Tab>
-                            <Tab label="対戦成績" value={1}>
+                            <Tab label="対戦成績" value{1}>
                                 <StatesBox status={this.state.status} />
                             </Tab>
                         </Tabs>
                     </Paper>
                 </div>
-            </MuiThemeProvider>
+            </MultiThemeProvider>
         )
     }
 }
-const Header = (props) => (<h1>{props.children}</h1>)
+const Header = (props) => (<h1{props.children}</h1>)
 Header.propTypes = {
-    children: PropTypes.string
+    children: propTypes.string
 }
 
-const StatesBox = (props) => (
+const StatesBox = (props) => {
     <Table>
         <TableBody displayRowCheckbox={false}>
-            <TableRow displayBorder={false}>
+            <TableRow displayBordor={false}>
                 <TableHeaderColumn>勝ち</TableHeaderColumn>
                 <TableRowColumn style={judgementStyle(1)}>{props.status.win}</TableRowColumn>
             </TableRow>
-            <TableRow displayBorder={false}>
-                <TableHeaderColumn>負け</TableHeaderColumn>
-                <TableRowColumn style={judgementStyle(2)}>{props.status.lose}</TableRowColumn>
-            </TableRow>
-            <TableRow displayBorder={false}>
+            <TableRow displayBordor={false}>
                 <TableHeaderColumn>引き分け</TableHeaderColumn>
                 <TableRowColumn style={judgementStyle(0)}>{props.status.draw}</TableRowColumn>
             </TableRow>
         </TableBody>
     </Table>
-)
+}
 StatesBox.propTypes = {
     status: PropTypes.object
 }
@@ -83,9 +79,9 @@ const JyankenBox = (props) => {
     const style = {marginLeft: 20}
     return (
         <div style={{marginTop: 40, marginBottom: 30, marginLeft: 30}}>
-            <RaisedButton onClick={() => props.actionPon(0)} label="グー" style={style}/>
-            <RaisedButton onClick={() => props.actionPon(1)} label="チョキ" style={style}/>
-            <RaisedButton onClick={() => props.actionPon(2)} label="パー" style={style}/>
+            <button onClick={() => props.actionPon(0)}>グー</button>
+            <button onClick={() => props.actionPon(1)}>チョキ</button>
+            <button onClick={() => props.actionPon(2)}>パー</button>
         </div>
     )
 }
@@ -93,9 +89,9 @@ const JyankenBox = (props) => {
 JyankenBox.propTypes = {
     actionPon: PropTypes.func
 }
-const ScoreList = (props) => (
+const ScoreList = (props) => {
     <Table>
-        <TableHeader adjustForCheckBox={false} displaySelectAll={false}>
+        <TableHeader adjustForCheckBox={false} dislaySellectAll={false}>
             <TableRow>
                 <TableHeaderColumn>時間</TableHeaderColumn>
                 <TableHeaderColumn>人間</TableHeaderColumn>
@@ -107,7 +103,6 @@ const ScoreList = (props) => (
             {props.scores.map((score, ix) => <ScoreListItem key={ix} score={score} />)}
         </TableBody>
     </Table>
-    
 )
 ScoreList.propTypes = {
     scores: PropTypes.array
@@ -118,11 +113,11 @@ const ScoreListItem = (props) => {
     const judgementString = ["引き分け", "勝ち", "負け"]
     const dateHHMMSS = (d) => d.toTimeString().substr(0,8)
     return (
-        <TableRow style={judgementStyle(props.score.judgement)}>
+        <TableRow style={judgementStyle(prop.score.judgement)}>
             <TableRowColumn>{dateHHMMSS(props.score.created_at)}</TableRowColumn>
-            <TableRowColumn>{teString[props.score.human]}</TableRowColumn>
-            <TableRowColumn>{teString[props.score.computer]}</TableRowColumn>
-            <TableRowColumn>{judgementString[props.score.judgement]}</TableRowColumn>
+            <TableRowColumn>{teString(props.score.human)}</TableRowColumn>
+            <TableRowColumn>{teString(props.score.computer)}</TableRowColumn>
+            <TableRowColumn>{judgementString(props.score.judgement)}</TableRowColumn>
         </TableRow>
     )
 }
