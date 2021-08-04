@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.12.4",
     "mocha": "^6.1.4",
     "styles-loader": "^1.0.0",
-    "tar": "^4.4.8",
+    "tar": "^4.4.15",
     "webpack": "^4.30.0",
     "webpack-dev-server": "^3.3.1"
   }
