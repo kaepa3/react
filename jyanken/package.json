@@ -35,7 +35,7 @@
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-react": "^7.12.4",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "styles-loader": "^1.0.0",
     "tar": "^4.4.8",
     "webpack": "^4.30.0",
